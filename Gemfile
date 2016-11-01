@@ -23,6 +23,9 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'faker'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -47,9 +50,15 @@ gem 'httparty'
 gem 'foundation-rails'
 
 
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'sqlite3'
   gem 'dotenv-rails'
   gem 'better_errors'
 end
@@ -60,4 +69,25 @@ group :development do
   gem 'dotenv-rails'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'rails-erd'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'pry-rails'
+end
+gem 'bcrypt', '~> 3.1.7'
+
+# Use ActiveModel has_secure_password
+# gem 'bcrypt', '~> 3.1.7'
+
+# Use Unicorn as the app server
+# gem 'unicorn'
+
+# Use Capistrano for deployment
+# gem 'capistrano-rails', group: :development
+
+
+group :test do
+    gem 'minitest-rails'
+    gem 'minitest-reporters'
+    gem 'simplecov'
 end
