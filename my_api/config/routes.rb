@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  root 'recipequery'
+  get 'recipequery/index', to: 'recipequery#index'
+  get 'recipequery/show/:id', to: 'recipequery#show'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
