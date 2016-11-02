@@ -20,13 +20,13 @@ class EdamamApiWrapper
     return recipe_list
   end
 
-  def self.list_esp_recipes()
-      url = ESP_BASE_URL + "?#{q}" + "app_id=$#{ID}" + "&app_key=$#{TOKEN}"
+  def self.list_esp_recipes(query)
+      url = ESP_BASE_URL + "?#{query}" + "app_id=#{ID}" + "&app_key=#{TOKEN}"
       data = HTTParty.get(url)
       recipe_list = []
         if data["recipes"]
           data["recipes"].each do |recipe|
-            wrapper = Recipe.new recipe["q"], recipe["id"], is_archived: recipe["is_archived"], members: recipe["members"]
+            wrapper = Recipe.new recipe["label"], recipe["image"], is_archived: recipe["url"], members: recipe["members"]
             recipe_list << wrapper
           end
         end

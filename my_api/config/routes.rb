@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'recipequery'
+  root 'welcome/index', to: 'welcome#index' as: 'home'
   get 'recipequery/index', to: 'recipequery#index'
   get 'recipequery/show/:id', to: 'recipequery#show'
   # The priority is based upon order of creation: first created -> highest priority.
