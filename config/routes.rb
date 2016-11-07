@@ -1,14 +1,23 @@
 Rails.application.routes.draw do
-  root 'welcome/index'
-  get 'welcome/index', to: 'welcome#index'
-  get 'welcome/show', to: 'welcome#show'
-  get 'recipequery/index', to: 'recipequery#index'
-  get 'recipequery/show/:id', to: 'recipequery#show'
+  ##the page all users will land on
+  #CONTENT
+  ##I will need for pop path, to create a short form allowing the user to save recipes to the db
+  ##this page will have 1. the nav bar, 2. some images, 3. an index of the first 10 results including [link to show, image, label]
+  root 'recipes#index'
+  ##this page will have 2. [image, recipe, ingredients, ...link to url/uri]
+  get 'recipes/show/:label', to: 'recipes#show', as: 'recipe'
+  ##this page will not technically exist, other than as a controller route for the query method
+  get 'recipes/search/:w', to: 'recipes#search', as: 'search'
+  ##this page serves to populate the index/homepage when the user has not submitted a query or the search has been reset
+  get 'recipes/start', to: 'recipes#start', as: 'start'
+  ##this page will contain any recipes that the user have checked 'save this recipe'
+  get 'recipes/popular', to: 'recipes#popular', as: 'pop'
+end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  # root 'recipes#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -57,5 +66,3 @@ Rails.application.routes.draw do
   #     # Directs /admin/products/* to Admin::ProductsController
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
-  #   end
-end
