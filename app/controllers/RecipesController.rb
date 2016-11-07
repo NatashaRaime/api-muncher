@@ -31,11 +31,4 @@ class RecipesController < ApplicationController
     @recipe_name = params[:label]
   end
 
-
-
-  private
-
-  def recipe_params
-    params.require(:query).permit(:label, :health, :diet, :calories)
-  end
 end
