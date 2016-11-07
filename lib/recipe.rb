@@ -1,52 +1,39 @@
+require 'httparty'
+
 class Recipe
+  BASE_URL = "https://api.edamam.com/search?q="
+  TOKEN = ENV["TOKEN"]
+  ID = ENV["ID"]
 
-  attr_reader :name, :id, :label, :recipe, :image
 
-  def initialize(name, id, options = {} )
-    # Commented out because there's no way I'd be able to remember
-    # all this live.
-    # @purpose = options[:purpose]
-    # @is_archived = options[:is_archived]
-    # @is_general = options[:is_archived]
-    # @members = options[:members]
-    @name = name
-    @id = id
+  def initialize
   end
 
-  # Send a message to this slack channel
-  # Returns the data from the Slack server's response
-  def show
-  end
-
-  # Create a class-level instance variable.
-  # Musch more likely to work as expected than a class variable
-  # See http://www.railstips.org/blog/archives/2006/11/18/class-and-instance-variables-in-ruby/
-  class << self
-    attr_reader :channels
-  end
-
-  # class << self, an instance variable we have access to  "Channel.channels", another way of writing a function self.all
-
-  # Return a memoized set of all channels
-  def self.all
-    SlackApiWrapper.listchannels
-  end
-
-  # Foreget all memoized values
-  def self.reset
-  end
-
-  # Return either the first (probably only) channel matching
-  # the given name, or nil.
-  def self.by_name(name)
-    matches = all.select do |c|
-      c.name == name
+  def self.all(q,base) #q to and from increment
+    basei = 0
+    if base != nil
+      basei = base.to_i
     end
-    return matches.first
+
+    url = BASE_URL + "#{q}&app_id=#{ID}&app_key=#{TOKEN}&from=#{basei}&to=#{(basei+10)}"
+    data = HTTParty.get(url)
+    dataSet = []
+    if data["hits"]
+        data["hits"].each do |current|
+          wrapper = current["recipe"]
+          dataSet << wrapper
+      end
+    end
+  return dataSet
   end
 
-  # Return either the first (probably only) channel matching
-  # the given ID, or nil.
-  def self.by_id(id)
+  def self.reset; end
+
+  # Return a memoized set of all recipes?
+
+  #Return a single recipe for show page
+  def self.find(label, base)
+    match = self.all(label, base)
+  return match.first
   end
 end
